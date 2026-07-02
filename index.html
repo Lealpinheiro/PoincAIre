@@ -151,6 +151,20 @@
             border-bottom: none;
         }
 
+        /* Estilo para o GIF */
+        .gif-display {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .gif-display img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 2px solid var(--accent-yellow);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+        }
+
         pre {
             background-color: var(--code-bg);
             border-radius: 8px;
@@ -202,7 +216,14 @@
         <div id="home" class="tab-content active">
             <div class="section-block">
                 <h2>Project Description</h2>
-                <p class="placeholder-text">[Insert your project description, objectives, and dynamic systems context here.]</p>
+                <p>Welcome to the official repository for <strong>PoincAIré</strong>. This project explores the synergy between classical dynamics and modern machine learning.</p>
+                
+                <div class="gif-display">
+                    <img src="omega_evolution.gif" alt="Evolution of Omega Dynamical Map">
+                    <p style="font-size: 0.9rem; color: var(--accent-soft); margin-top: 10px;">Fig 1: Animated evolution of the dynamical structure across varying frequencies (ω).</p>
+                </div>
+
+                <p class="placeholder-text">[Add more project details, scientific objectives and context here.]</p>
             </div>
 
             <div class="section-block">
