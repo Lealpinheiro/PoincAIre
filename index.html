@@ -6,14 +6,22 @@
     <title>PoincAIré</title>
     <style>
         :root {
-            --bg-color: #001226;        /* Azul marinho bem profundo */
-            --card-bg: #001f3f;         /* Azul marinho médio para destacar os blocos */
-            --code-bg: #000b14;         /* Azul marinho quase preto para o código */
-            --text-main: #c2d1e0;       /* Texto principal claro e limpo */
-            --text-bright: #ffffff;     /* Texto puro para títulos internos */
-            --accent-yellow: #ffd700;   /* Amarelo ouro vibrante para detalhes */
-            --accent-soft: #ffe680;     /* Amarelo mais suave para elementos secundários */
-            --border-color: #1a3a5c;    /* Bordas azuladas discretas */
+            --bg-color: #001226;        /* Deep navy blue */
+            --card-bg: #001f3f;         /* Medium navy for cards */
+            --code-bg: #000b14;         /* Very dark navy for code blocks */
+            --text-main: #c2d1e0;       /* Light, clean main text */
+            --text-bright: #ffffff;     /* Pure white for inner headers */
+            --accent-yellow: #ffd700;   /* Vibrant gold for highlights */
+            --accent-soft: #ffe680;     /* Soft yellow for secondary elements */
+            --border-color: #1a3a5c;    /* Subtle blue borders */
+
+            /* Python Syntax Highlighting Colors */
+            --py-comment: #7289da;      /* Grayish blue for comments */
+            --py-keyword: #4fffcb;      /* Cyan for keywords (import, for, in) */
+            --py-builtin: #ff79c6;      /* Pink for builtins/functions */
+            --py-string: #f1fa8c;       /* Soft yellow/green for strings */
+            --py-number: #bd93f9;       /* Purple for numbers */
+            --py-text: #f8f8f2;         /* Off-white for standard code text */
         }
 
         body {
@@ -32,13 +40,35 @@
             border-bottom: 1px solid var(--border-color);
         }
 
+        /* 3D Dynamic Design for PoincAIré */
         header h1 {
             margin: 0;
             font-size: 5.5rem;
-            font-weight: 800;
-            letter-spacing: -2px;
-            color: var(--accent-yellow);
-            text-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+            font-weight: 900;
+            letter-spacing: -1px;
+            display: inline-block;
+            background: linear-gradient(135deg, #ffd700 0%, #ffaa00 50%, #ffe680 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.5));
+            animation: pulse-glow 4s ease-in-out infinite alternate;
+            
+            /* High-definition 3D depth layering */
+            text-shadow: 
+                0 1px 0 #ccac00,
+                0 2px 0 #b39700,
+                0 3px 0 #998100,
+                0 4px 0 #806c00,
+                0 5px 15px rgba(0,0,0,0.6);
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                filter: drop-shadow(0 2px 5px rgba(255,215,0,0.2));
+            }
+            100% {
+                filter: drop-shadow(0 5px 20px rgba(255,215,0,0.5));
+            }
         }
 
         .subtitle {
@@ -84,8 +114,9 @@
             border-bottom: 3px solid var(--accent-yellow);
         }
 
+        /* Increased max-width to hold large code environments comfortably */
         .container {
-            max-width: 1040px;
+            max-width: 1200px;
             margin: 40px auto;
             padding: 0 20px;
         }
@@ -97,17 +128,19 @@
             border-radius: 12px;
             border: 1px solid var(--border-color);
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-sizing: border-box;
         }
 
         .tab-content.active {
             display: block;
         }
 
-        /* Estrutura de Layout com Abas Laterais */
+        /* Flexible Container Layout for Sidebar Examples */
         .side-tabs-container {
             display: flex;
             gap: 25px;
             margin-top: 20px;
+            align-items: flex-start;
         }
 
         .side-nav {
@@ -145,17 +178,18 @@
             border-color: var(--border-color);
         }
 
+        /* Fixed flex grow parameters to contain full nested code width */
         .side-tab-panel {
             display: none;
-            flex-grow: 1;
-            width: 100%;
+            flex: 1;
+            min-width: 0; 
         }
 
         .side-tab-panel.active {
             display: block;
         }
 
-        /* Renderização e alinhamento de imagens */
+        /* Image Rendering */
         .image-row {
             display: flex;
             gap: 15px;
@@ -245,6 +279,7 @@
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
         }
 
+        /* Syntax Highlighting CSS Framework with internal overflow handles */
         pre {
             background-color: var(--code-bg);
             border-radius: 8px;
@@ -254,8 +289,16 @@
             font-size: 0.9rem;
             line-height: 1.6;
             border: 1px solid rgba(255, 215, 0, 0.15);
-            color: #e6edf3;
+            color: var(--py-text);
+            max-width: 100%;
+            box-sizing: border-box;
         }
+
+        .c { color: var(--py-comment); font-style: italic; }   /* Comment */
+        .k { color: var(--py-keyword); font-weight: bold; }   /* Keyword */
+        .f { color: var(--py-builtin); }                      /* Function/Builtin */
+        .s { color: var(--py-string); }                       /* String */
+        .n { color: var(--py-number); }                       /* Number */
 
         .example-block {
             background: #001730;
@@ -264,6 +307,7 @@
             padding: 25px;
             margin-bottom: 20px;
             border-radius: 6px;
+            box-sizing: border-box;
         }
 
         .placeholder-text {
@@ -339,53 +383,55 @@
                         <h3>Example 1: Generating the Dynamical Map</h3>
                         <p>This script computes the grid space and predicts discrete classifications to map out the general layout of the system.</p>
 
-                        <h4>1.1 Dependencies & Model Loading</h4>
-                        <pre><code>import numpy as np
-import matplotlib.pyplot as plt
-import joblib
-from matplotlib.colors import ListedColormap, BoundaryNorm
+                        <h4>Dependencies & Model Loading</h4>
+                        <pre><code><span class="k">import</span> numpy <span class="k">as</span> np  <span class="c"># Array operations</span>
+<span class="k">import</span> matplotlib.pyplot <span class="k">as</span> plt  <span class="c"># Plotting tool</span>
+<span class="k">import</span> joblib  <span class="c"># Model loading tool</span>
+<span class="k">from</span> matplotlib.colors <span class="k">import</span> ListedColormap, BoundaryNorm  <span class="c"># Colormap tools</span>
 
-# Load the pre-trained XGBoost model
-model = joblib.load("xgboost_model.pkl")</code></pre>
+<span class="c"># Load pre-trained XGBoost model</span>
+model = joblib.<span class="f">load</span>(<span class="s">"xgboost_model.pkl"</span>)</code></pre>
 
-                        <h4>1.2 Parameter Configuration</h4>
-                        <pre><code># Domain Settings
-omega_list = [1.34]
-theta_sel = 0.
-ecc_vals = np.linspace(0., 0.2, 300)
-thetadot_vals = np.linspace(-1., 4., 300)
-E, T = np.meshgrid(ecc_vals, thetadot_vals)
+                        <h4>Parameter Configuration</h4>
+                        <pre><code><span class="c"># Domain Settings</span>
+omega_list = [<span class="n">1.34</span>]  <span class="c"># Target frequency</span>
+theta_sel = <span class="n">0.</span>  <span class="c"># Fixed angle section</span>
+ecc_vals = np.<span class="f">linspace</span>(<span class="n">0.</span>, <span class="n">0.2</span>, <span class="n">300</span>)  <span class="c"># Eccentricity range</span>
+thetadot_vals = np.<span class="f">linspace</span>(<span class="n">-1.</span>, <span class="n">4.</span>, <span class="n">300</span>)  <span class="c"># Angular velocity range</span>
+E, T = np.<span class="f">meshgrid</span>(ecc_vals, thetadot_vals)  <span class="c"># 2D grid generation</span>
 
-# Visualization Parameters
-cmap_regimes = ListedColormap(["blue", "red", "green"])
-norm = BoundaryNorm([-0.5, 0.5, 1.5, 2.5], cmap_regimes.N)
-class_names = ["resonance", "circularization", "chaos"]
-fig_size = (6, 5)
-cbar_kwargs = {"orientation": "horizontal", "pad": 0.15, "aspect": 40}
-save_kwargs = {"dpi": 300, "bbox_inches": "tight"}</code></pre>
+<span class="c"># Visualization Settings</span>
+cmap_regimes = <span class="f">ListedColormap</span>([<span class="s">"blue"</span>, <span class="s">"red"</span>, <span class="s">"green"</span>])  <span class="c"># Colormap colors</span>
+norm = <span class="f">BoundaryNorm</span>([<span class="n">-0.5</span>, <span class="n">0.5</span>, <span class="n">1.5</span>, <span class="n">2.5</span>], cmap_regimes.N)  <span class="c"># Bounds for discrete classes</span>
+class_names = [<span class="s">"resonance"</span>, <span class="s">"circularization"</span>, <span class="s">"chaos"</span>]  <span class="c"># Class labels</span>
+fig_size = (<span class="n">6</span>, <span class="n">5</span>)  <span class="c"># Plot dimensions</span>
+cbar_kwargs = {<span class="s">"orientation"</span>: <span class="s">"horizontal"</span>, <span class="s">"pad"</span>: <span class="n">0.15</span>, <span class="s">"aspect"</span>: <span class="n">40</span>}  <span class="c"># Colorbar layout</span>
+save_kwargs = {<span class="s">"dpi"</span>: <span class="n">300</span>, <span class="s">"bbox_inches"</span>: <span class="s">"tight"</span>}  <span class="c"># File export quality</span></pre>
 
-                        <h4>1.3 Classification & Mesh Generation</h4>
-                        <pre><code>for omega_sel in omega_list:
-    grid = np.c_[E.ravel(), T.ravel(), np.full(E.size, omega_sel), np.full(E.size, theta_sel)]
+                        <h4>Classification & Mesh Generation</h4>
+                        <pre><code><span class="k">for</span> omega_sel <span class="k">in</span> omega_list:
+    <span class="c"># Build 2D test feature grid [ecc, thetadot, omega, theta]</span>
+    grid = np.c_[E.<span class="f">ravel</span>(), T.<span class="f">ravel</span>(), np.<span class="f">full</span>(E.size, omega_sel), np.<span class="f">full</span>(E.size, theta_sel)]
     
-    # Predict probabilities and find the class with highest probability
-    probs = model.predict_proba(grid)
-    pred_class = np.argmax(probs, axis=1).reshape(E.shape)
+    <span class="c"># Predict probability distribution and pick the highest index</span>
+    probs = model.<span class="f">predict_proba</span>(grid)
+    pred_class = np.<span class="f">argmax</span>(probs, axis=<span class="n">1</span>).<span class="f">reshape</span>(E.shape)
     
-    # Plotting the Dynamical Map
-    plt.figure(figsize=fig_size)
-    img = plt.pcolormesh(T, E, pred_class, cmap=cmap_regimes, norm=norm, shading="auto")
-    plt.xlabel(r"$\dot{\theta}$", fontsize=16)
-    plt.ylabel("e", fontsize=16)
+    <span class="c"># Plotting layout</span>
+    plt.<span class="f">figure</span>(figsize=fig_size)
+    img = plt.<span class="f">pcolormesh</span>(T, E, pred_class, cmap=cmap_regimes, norm=norm, shading=<span class="s">"auto"</span>)
+    plt.<span class="f">xlabel</span>(<span class="s">r"$\dot{\theta}$"</span>, fontsize=<span class="n">16</span>)
+    plt.<span class="f">ylabel</span>(<span class="s">"e"</span>, fontsize=<span class="n">16</span>)
     
-    cbar = plt.colorbar(img, **cbar_kwargs)
-    cbar.set_ticks([0, 1, 2])
-    cbar.set_ticklabels(class_names)
-    cbar.set_label("Dynamical regime", fontsize=14)
+    <span class="c"># Colorbar format</span>
+    cbar = plt.<span class="f">colorbar</span>(img, **cbar_kwargs)
+    cbar.<span class="f">set_ticks</span>([<span class="n">0</span>, <span class="n">1</span>, <span class="n">2</span>])
+    cbar.<span class="f">set_ticklabels</span>(class_names)
+    cbar.<span class="f">set_label</span>(<span class="s">"Dynamical regime"</span>, fontsize=<span class="n">14</span>)
     
-    plt.tight_layout()
-    plt.savefig(f"diagram_{omega_sel}.png", **save_kwargs)
-    plt.close()</code></pre>
+    plt.<span class="f">tight_layout</span>()
+    plt.<span class="f">savefig</span>(<span class="s">f"diagram_{omega_sel}.png"</span>, **save_kwargs)
+    plt.<span class="f">close</span>()</code></pre>
 
                         <div class="image-row">
                             <div class="image-container">
@@ -406,32 +452,33 @@ save_kwargs = {"dpi": 300, "bbox_inches": "tight"}</code></pre>
                         <h3>Example 2: Generating the Entropy Map</h3>
                         <p>This snippet quantifies the classification uncertainty across the parameter boundaries using normalized Shannon entropy.</p>
 
-                        <h4>2.1 Shannon Entropy Calculation</h4>
-                        <pre><code># (Assumes model, grid and configuration are initialized as shown in Example 1)
-for omega_sel in omega_list:
-    grid = np.c_[E.ravel(), T.ravel(), np.full(E.size, omega_sel), np.full(E.size, theta_sel)]
-    probs = model.predict_proba(grid)
+                        <h4>Shannon Entropy Calculation</h4>
+                        <pre><code><span class="k">for</span> omega_sel <span class="k">in</span> omega_list:
+    <span class="c"># Setup standard tracking grid matrix</span>
+    grid = np.c_[E.<span class="f">ravel</span>(), T.<span class="f">ravel</span>(), np.<span class="f">full</span>(E.size, omega_sel), np.<span class="f">full</span>(E.size, theta_sel)]
+    probs = model.<span class="f">predict_proba</span>(grid)
     
-    # Compute normalized entropy for a 3-class system
-    eps = 1e-12
-    entropy = -np.sum(probs * np.log(probs + eps), axis=1)
-    max_entropy = np.log(3)  
-    entropy_normalized = entropy / max_entropy
-    entropy_map = entropy_normalized.reshape(E.shape)</code></pre>
+    <span class="c"># Calculate normalized Shannon Entropy for a 3-class system</span>
+    eps = <span class="n">1e-12</span>  <span class="c"># Tiny safety threshold to avoid log(0) error</span>
+    entropy = -np.<span class="f">sum</span>(probs * np.<span class="f">log</span>(probs + eps), axis=<span class="n">1</span>)  <span class="c"># Core entropy sum</span>
+    max_entropy = np.<span class="f">log</span>(<span class="n">3</span>)  <span class="c"># Maximum uncertainty cap</span>
+    entropy_normalized = entropy / max_entropy  <span class="c"># Scale bounds strictly to [0, 1]</span>
+    entropy_map = entropy_normalized.<span class="f">reshape</span>(E.shape)  <span class="c"># Reshape vector to 2D grid</span></pre>
 
-                        <h4>2.2 Mapping Uncertainty</h4>
-                        <pre><code>    # Plotting the Uncertainty/Entropy Map
-    plt.figure(figsize=fig_size)
-    img = plt.pcolormesh(T, E, entropy_map, shading="auto", cmap="inferno", vmin=0, vmax=1)
+                        <h4>Mapping Uncertainty</h4>
+                        <pre><code>    <span class="c"># Render Uncertainty Map</span>
+    plt.<span class="f">figure</span>(figsize=fig_size)
+    img = plt.<span class="f">pcolormesh</span>(T, E, entropy_map, shading=<span class="s">"auto"</span>, cmap=<span class="s">"inferno"</span>, vmin=<span class="n">0</span>, vmax=<span class="n">1</span>)
     
-    cbar = plt.colorbar(img, **cbar_kwargs)
-    cbar.set_label("Entropy", fontsize=14)
-    plt.xlabel(r"$\dot{\theta}$", fontsize=16)
-    plt.ylabel("e", fontsize=16)
+    <span class="c"># Colorbar properties</span>
+    cbar = plt.<span class="f">colorbar</span>(img, **cbar_kwargs)
+    cbar.<span class="f">set_label</span>(<span class="s">"Entropy"</span>, fontsize=<span class="n">14</span>)
+    plt.<span class="f">xlabel</span>(<span class="s">r"$\dot{\theta}$"</span>, fontsize=<span class="n">16</span>)
+    plt.<span class="f">ylabel</span>(<span class="s">"e"</span>, fontsize=<span class="n">16</span>)
     
-    plt.tight_layout()
-    plt.savefig(f"uncertainty_{omega_sel}.png", **save_kwargs)
-    plt.close()</code></pre>
+    plt.<span class="f">tight_layout</span>()
+    plt.<span class="f">savefig</span>(<span class="s">f"uncertainty_{omega_sel}.png"</span>, **save_kwargs)
+    plt.<span class="f">close</span>()</code></pre>
 
                         <div class="image-row">
                             <div class="image-container">
@@ -452,36 +499,39 @@ for omega_sel in omega_list:
                         <h3>Example 3: Individual Class Probability Maps</h3>
                         <p>This script slices the output array to map out the individual, standalone probabilities for each specific regime.</p>
 
-                        <h4>3.1 Isolating Class Matrices</h4>
-                        <pre><code># (Assumes model, grid and configuration are initialized as shown in Example 1)
-for omega_sel in omega_list:
-    grid = np.c_[E.ravel(), T.ravel(), np.full(E.size, omega_sel), np.full(E.size, theta_sel)]
-    probs = model.predict_proba(grid)
+                        <h4>Isolating Class Matrices</h4>
+                        <pre><code><span class="k">for</span> omega_sel <span class="k">in</span> omega_list:
+    <span class="c"># Setup coordinates matrix arrays</span>
+    grid = np.c_[E.<span class="f">ravel</span>(), T.<span class="f">ravel</span>(), np.<span class="f">full</span>(E.size, omega_sel), np.<span class="f">full</span>(E.size, theta_sel)]
+    probs = model.<span class="f">predict_proba</span>(grid)
     
-    # Reshape probabilities for each individual class
-    P_res = probs[:, 0].reshape(E.shape)
-    P_circ = probs[:, 1].reshape(E.shape)
-    P_chaos = probs[:, 2].reshape(E.shape)</code></pre>
+    <span class="c"># Slice single probabilities for each target state</span>
+    P_res = probs[:, <span class="n">0</span>].<span class="f">reshape</span>(E.shape)    <span class="c"># Slice Resonance data</span>
+    P_circ = probs[:, <span class="n">1</span>].<span class="f">reshape</span>(E.shape)   <span class="c"># Slice Circularization data</span>
+    P_chaos = probs[:, <span class="n">2</span>].<span class="f">reshape</span>(E.shape)  <span class="c"># Slice Chaos data</span></pre>
 
-                        <h4>3.2 Generating Subplots</h4>
-                        <pre><code>    # Initialize a 3-row stacked subplot layout
-    fig, axes = plt.subplots(3, 1, figsize=(6, 10), sharex=True)
-    maps = [P_res, P_circ, P_chaos]
-    class_names = ["resonance", "circularization", "chaos"]
+                        <h4>Generating Subplots</h4>
+                        <pre><code>    <span class="c"># Setup a vertically stacked multi-panel layout (3 rows, 1 col)</span>
+    fig, axes = plt.<span class="f">subplots</span>(<span class="n">3</span>, <span class="n">1</span>, figsize=(<span class="n">6</span>, <span class="n">10</span>), sharex=<span class="k">True</span>)
+    maps = [P_res, P_circ, P_chaos]  <span class="c"># Data array collection</span>
+    class_names = [<span class="s">"resonance"</span>, <span class="s">"circularization"</span>, <span class="s">"chaos"</span>]
     
-    for i, ax in enumerate(axes):
-        im = ax.pcolormesh(T, E, maps[i], shading="auto", cmap="viridis", vmin=0, vmax=1)
-        ax.set_ylabel("e")
+    <span class="k">for</span> i, ax <span class="k">in</span> <span class="f">enumerate</span>(axes):
+        <span class="c"># Render continuous colormap layer using 'viridis'</span>
+        im = ax.<span class="f">pcolormesh</span>(T, E, maps[i], shading=<span class="s">"auto"</span>, cmap=<span class="s">"viridis"</span>, vmin=<span class="n">0</span>, vmax=<span class="n">1</span>)
+        ax.<span class="f">set_ylabel</span>(<span class="s">"e")
         
-        if i == len(axes) - 1:
-            ax.set_xlabel(r"$\dot{\theta}$")
+        <span class="c"># Keep horizontal labels only on the bottom panel</span>
+        <span class="k">if</span> i == <span class="f">len</span>(axes) - <span class="n">1</span>:
+            ax.<span class="f">set_xlabel</span>(<span class="s">r"$\dot{\theta}$"</span>)
             
-        cbar = plt.colorbar(im, ax=ax)
-        cbar.set_label(f"Probability ({class_names[i]})")
+        <span class="c"># Hook local indicator bar to individual panel</span>
+        cbar = plt.<span class="f">colorbar</span>(im, ax=ax)
+        cbar.<span class="f">set_label</span>(<span class="s">f"Probability ({class_names[i]})"</span>)
         
-    plt.tight_layout()
-    plt.savefig(f"probability_{omega_sel}.png")
-    plt.close()</code></pre>
+    plt.<span class="f">tight_layout</span>()
+    plt.<span class="f">savefig</span>(<span class="s">f"probability_{omega_sel}.png"</span>)
+    plt.<span class="f">close</span>()</code></pre>
 
                         <div class="image-row">
                             <div class="image-container">
@@ -505,19 +555,16 @@ for omega_sel in omega_list:
         function openTab(evt, tabName) {
             var i, tabcontent, tabbuttons;
             
-            // Esconde todos os conteúdos das abas principais removendo a classe 'active'
             tabcontent = document.getElementsByClassName("tab-content");
             for (i = 0; i < tabcontent.length; i++) {
                 tabcontent[i].classList.remove("active");
             }
             
-            // Remove a classe 'active' de todos os botões do menu superior
             tabbuttons = document.getElementsByClassName("tab-button");
             for (i = 0; i < tabbuttons.length; i++) {
                 tabbuttons[i].classList.remove("active");
             }
             
-            // Mostra a aba atual e adiciona a classe 'active' ao botão clicado
             document.getElementById(tabName).classList.add("active");
             evt.currentTarget.classList.add("active");
         }
@@ -525,19 +572,16 @@ for omega_sel in omega_list:
         function openSideTab(evt, sideTabName) {
             var i, sidecontent, sidebuttons;
             
-            // Esconde todos os painéis das abas laterais removendo a classe 'active'
             sidecontent = document.getElementsByClassName("side-tab-panel");
             for (i = 0; i < sidecontent.length; i++) {
                 sidecontent[i].classList.remove("active");
             }
             
-            // Remove a classe 'active' de todos os botões do menu lateral
             sidebuttons = document.getElementsByClassName("side-tab-button");
             for (i = 0; i < sidebuttons.length; i++) {
                 sidebuttons[i].classList.remove("active");
             }
             
-            // Mostra o painel lateral atual e ativa o respetivo botão
             document.getElementById(sideTabName).classList.add("active");
             evt.currentTarget.classList.add("active");
         }
