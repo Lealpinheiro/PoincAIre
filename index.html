@@ -6,39 +6,56 @@
     <title>PoincAIré</title>
     <style>
         :root {
-            --primary-color: #004085; /* Azul escuro para o cabeçalho */
-            --accent-color: #007bff; /* Azul brilhante para detalhes */
-            --text-color: #f8f9fa; /* Texto claro */
-            --bg-color: #1a1a2e; /* Fundo mais escuro e colorido */
-            --card-bg: #2d2d44; /* Fundo das abas */
-            --nav-bg: #e0f2f1; /* Azul muito claro para a navegação */
-            --code-bg: #eef2f5; /* Fundo do código */
+            --bg-color: #001226;        /* Azul marinho bem profundo */
+            --card-bg: #001f3f;         /* Azul marinho médio para destacar os blocos */
+            --code-bg: #000b14;         /* Azul marinho quase preto para o código */
+            --text-main: #c2d1e0;       /* Texto principal claro e limpo */
+            --text-bright: #ffffff;     /* Texto puro para títulos internos */
+            --accent-yellow: #ffd700;   /* Amarelo ouro vibrante para detalhes */
+            --accent-soft: #ffe680;     /* Amarelo mais suave para elementos secundários */
+            --border-color: #1a3a5c;    /* Bordas azuladas discretas */
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
-            color: var(--text-color);
+            color: var(--text-main);
             background-color: var(--bg-color);
             line-height: 1.6;
         }
 
         header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 50px 0; /* Mais padding para um título maior */
+            background: linear-gradient(180deg, #001f3f 0%, var(--bg-color) 100%);
+            padding: 60px 0 40px 0;
             text-align: center;
+            border-bottom: 1px solid var(--border-color);
         }
 
         header h1 {
             margin: 0;
-            font-size: 5rem; /* Título muito maior */
+            font-size: 5.5rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            color: var(--accent-yellow);
+            text-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+        }
+
+        .subtitle {
+            font-style: normal;
+            font-weight: 400;
+            color: #a0b2c6;
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 20px auto 0 auto;
+            line-height: 1.5;
+            text-align: center;
         }
 
         nav {
-            background-color: var(--nav-bg);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            background-color: rgba(0, 31, 63, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: center;
             position: sticky;
@@ -49,28 +66,28 @@
         nav button {
             background: none;
             border: none;
-            padding: 20px 30px;
-            font-size: 1.2rem;
+            padding: 18px 30px;
+            font-size: 1.1rem;
             font-weight: 700;
             cursor: pointer;
-            color: var(--primary-color);
-            border-bottom: 4px solid transparent;
-            transition: all 0.3s ease;
+            color: #8fa3b7;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
         }
 
         nav button:hover {
-            color: var(--accent-color);
+            color: var(--accent-soft);
         }
 
         nav button.active {
-            color: var(--accent-color);
-            border-bottom: 4px solid var(--accent-color);
+            color: var(--accent-yellow);
+            border-bottom: 3px solid var(--accent-yellow);
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 960px;
             margin: 40px auto;
-            padding: 0 30px;
+            padding: 0 20px;
         }
 
         .tab-content {
@@ -78,7 +95,8 @@
             background: var(--card-bg);
             padding: 40px;
             border-radius: 12px;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .tab-content.active {
@@ -86,52 +104,81 @@
         }
 
         h2 {
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 15px;
-            color: var(--accent-color);
-            margin-top: 40px;
+            font-size: 1.8rem;
+            color: var(--accent-yellow);
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            letter-spacing: 0.5px;
+        }
+
+        h2::before {
+            content: "■";
+            color: var(--accent-yellow);
+            margin-right: 12px;
+            font-size: 1.2rem;
         }
 
         h3 {
-            color: #add8e6; /* Azul claro para subtítulos */
-            margin-top: 30px;
+            color: var(--accent-soft);
+            font-size: 1.45rem;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
 
-        .subtitle {
-            font-style: italic;
-            color: #d1d1e0;
-            font-size: 1.4rem;
-            margin-top: 15px;
-            margin-bottom: 40px;
-            text-align: center;
+        h4 {
+            color: #a0b2c6;
+            font-size: 1rem;
+            margin-top: 25px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        p {
+            color: var(--text-main);
+            font-size: 1.05rem;
         }
 
         .section-block {
-            margin-bottom: 50px;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        }
+        
+        .section-block:last-child {
+            border-bottom: none;
         }
 
         pre {
             background-color: var(--code-bg);
             border-radius: 8px;
             padding: 20px;
-            overflow: auto;
+            overflow-x: auto;
             font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
-            font-size: 90%;
-            line-height: 1.5;
-            border: 2px solid var(--accent-color);
-            color: #24292e; /* Texto do código escuro */
-        }
-
-        code {
-            color: #24292e;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            color: #e6edf3;
         }
 
         .example-block {
-            background: #3a3a55; /* Fundo ligeiramente diferente para os exemplos */
-            border-left: 6px solid var(--accent-color);
-            padding: 20px;
-            margin: 30px 0;
-            border-radius: 0 8px 8px 0;
+            background: #001730;
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--accent-yellow);
+            padding: 25px;
+            margin: 35px 0;
+            border-radius: 6px;
+        }
+
+        .placeholder-text {
+            color: #8fa3b7;
+            font-style: italic;
+            background: rgba(255, 215, 0, 0.03);
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px dashed rgba(255, 215, 0, 0.2);
         }
     </style>
 </head>
@@ -139,6 +186,9 @@
 
     <header>
         <h1>PoincAIré</h1>
+        <div class="subtitle">
+            Classification Learning of Spin-Orbit Dynamical Structures via Poincaré Surface of Section
+        </div>
     </header>
 
     <nav>
@@ -150,61 +200,54 @@
     <div class="container">
         
         <div id="home" class="tab-content active">
-            <div class="subtitle">
-                Classification Learning of Spin-Orbit Dynamical Structures via Poincaré Surface of Section
-            </div>
-            
             <div class="section-block">
                 <h2>Project Description</h2>
-                <p>[Insert your project description, objectives, and dynamic systems context here.]</p>
+                <p class="placeholder-text">[Insert your project description, objectives, and dynamic systems context here.]</p>
             </div>
 
             <div class="section-block">
                 <h2>Authors</h2>
-                <p>[Insert authors names, affiliations, and contact information here.]</p>
+                <p class="placeholder-text">[Insert authors names, affiliations, and contact information here.]</p>
             </div>
 
             <div class="section-block">
                 <h2>Published Papers</h2>
-                <p>[Insert bibliographic references and links to your published articles here.]</p>
+                <p class="placeholder-text">[Insert bibliographic references and links to your published articles here.]</p>
             </div>
         </div>
 
         <div id="install" class="tab-content">
             <h2>Installation & Models</h2>
             <p>To run the examples and utilize the classification pipeline, please download the pre-trained machine learning models and tracking assets from the official repository release package.</p>
-            <p><em>[Link to model download placeholder]</em></p>
+            <p class="placeholder-text"><em>[Link to model download placeholder]</em></p>
         </div>
 
         <div id="example" class="tab-content">
             <h2>Code Examples</h2>
-            <p>Below is the Python implementation using XGBoost to map out spin-orbit dynamic scenarios, separated by the specific plotting functionalities and subdivided for clarity.</p>
+            <p style="color: #8fa3b7; margin-bottom: 30px;">Below is the Python implementation using XGBoost to map out spin-orbit dynamic scenarios, carefully segmented into distinct steps for each visualization.</p>
             
-            <hr>
-
             <div class="example-block">
                 <h3>Example 1: Generating the Dynamical Map</h3>
-                <p>This section is subdivided into data loading/setup and the actual classification and plotting.</p>
+                <p>This script computes the grid space and predicts discrete classifications to map out the general layout of the system.</p>
 
-                <h4>1.1 Setup and Data Loading</h4>
-                <p>Imports necessary libraries and loads the pre-trained model.</p>
+                <h4>1.1 Dependencies & Model Loading</h4>
                 <pre><code>import numpy as np
 import matplotlib.pyplot as plt
 import joblib
 from matplotlib.colors import ListedColormap, BoundaryNorm
 
-# Load model
+# Load the pre-trained XGBoost model
 model = joblib.load("xgboost_model.pkl")</code></pre>
 
-                <h4>1.2 Configuration</h4>
-                <p>Defines the parameter ranges and colormaps.</p>
-                <pre><code># Settings
+                <h4>1.2 Parameter Configuration</h4>
+                <pre><code># Domain Settings
 omega_list = [1.34]
 theta_sel = 0.
 ecc_vals = np.linspace(0., 0.2, 300)
 thetadot_vals = np.linspace(-1., 4., 300)
 E, T = np.meshgrid(ecc_vals, thetadot_vals)
 
+# Visualization Parameters
 cmap_regimes = ListedColormap(["blue", "red", "green"])
 norm = BoundaryNorm([-0.5, 0.5, 1.5, 2.5], cmap_regimes.N)
 class_names = ["resonance", "circularization", "chaos"]
@@ -212,13 +255,15 @@ fig_size = (6, 5)
 cbar_kwargs = {"orientation": "horizontal", "pad": 0.15, "aspect": 40}
 save_kwargs = {"dpi": 300, "bbox_inches": "tight"}</code></pre>
 
-                <h4>1.3 Classification and Dynamical Map Plotting</h4>
-                <p>Calculates predictions and generates the map.</p>
+                <h4>1.3 Classification & Mesh Generation</h4>
                 <pre><code>for omega_sel in omega_list:
     grid = np.c_[E.ravel(), T.ravel(), np.full(E.size, omega_sel), np.full(E.size, theta_sel)]
+    
+    # Predict probabilities and find the class with highest probability
     probs = model.predict_proba(grid)
     pred_class = np.argmax(probs, axis=1).reshape(E.shape)
     
+    # Plotting the Dynamical Map
     plt.figure(figsize=fig_size)
     img = plt.pcolormesh(T, E, pred_class, cmap=cmap_regimes, norm=norm, shading="auto")
     plt.xlabel(r"$\dot{\theta}$", fontsize=16)
@@ -236,25 +281,26 @@ save_kwargs = {"dpi": 300, "bbox_inches": "tight"}</code></pre>
 
             <div class="example-block">
                 <h3>Example 2: Generating the Entropy Map</h3>
-                <p>Focuses on evaluating classification uncertainty.</p>
+                <p>This snippet quantifies the classification uncertainty across the parameter boundaries using normalized Shannon entropy.</p>
 
-                <h4>2.1 Entropy Calculation</h4>
-                <p>Computes the Shannon entropy.</p>
-                <pre><code># (Assuming model loading and grid setup from Example 1)
+                <h4>2.1 Shannon Entropy Calculation</h4>
+                <pre><code># (Assumes model, grid and configuration are initialized as shown in Example 1)
 for omega_sel in omega_list:
     grid = np.c_[E.ravel(), T.ravel(), np.full(E.size, omega_sel), np.full(E.size, theta_sel)]
     probs = model.predict_proba(grid)
     
+    # Compute normalized entropy for a 3-class system
     eps = 1e-12
     entropy = -np.sum(probs * np.log(probs + eps), axis=1)
     max_entropy = np.log(3)  
     entropy_normalized = entropy / max_entropy
     entropy_map = entropy_normalized.reshape(E.shape)</code></pre>
 
-                <h4>2.2 Plotting the Entropy Map</h4>
-                <p>Visualizes the calculated entropy.</p>
-                <pre><code>    plt.figure(figsize=fig_size)
+                <h4>2.2 Mapping Uncertainty</h4>
+                <pre><code>    # Plotting the Uncertainty/Entropy Map
+    plt.figure(figsize=fig_size)
     img = plt.pcolormesh(T, E, entropy_map, shading="auto", cmap="inferno", vmin=0, vmax=1)
+    
     cbar = plt.colorbar(img, **cbar_kwargs)
     cbar.set_label("Entropy", fontsize=14)
     plt.xlabel(r"$\dot{\theta}$", fontsize=16)
@@ -266,31 +312,33 @@ for omega_sel in omega_list:
             </div>
 
             <div class="example-block">
-                <h3>Example 3: Generating Probability Maps for Individual Classes</h3>
-                <p>Extracts and plots probabilities for each class.</p>
+                <h3>Example 3: Individual Class Probability Maps</h3>
+                <p>This script slices the output array to map out the individual, standalone probabilities for each specific regime.</p>
 
-                <h4>3.1 Class Probability Extraction</h4>
-                <p>Separates the prediction probabilities.</p>
-                <pre><code># (Assuming model loading and grid setup from Example 1)
+                <h4>3.1 Isolating Class Matrices</h4>
+                <pre><code># (Assumes model, grid and configuration are initialized as shown in Example 1)
 for omega_sel in omega_list:
     grid = np.c_[E.ravel(), T.ravel(), np.full(E.size, omega_sel), np.full(E.size, theta_sel)]
     probs = model.predict_proba(grid)
     
+    # Reshape probabilities for each individual class
     P_res = probs[:, 0].reshape(E.shape)
     P_circ = probs[:, 1].reshape(E.shape)
     P_chaos = probs[:, 2].reshape(E.shape)</code></pre>
 
-                <h4>3.2 Plotting Probability Maps</h4>
-                <p>Creates subplots for each dynamical outcome.</p>
-                <pre><code>    fig, axes = plt.subplots(3, 1, figsize=(6, 10), sharex=True)
+                <h4>3.2 Generating Subplots</h4>
+                <pre><code>    # Initialize a 3-row stacked subplot layout
+    fig, axes = plt.subplots(3, 1, figsize=(6, 10), sharex=True)
     maps = [P_res, P_circ, P_chaos]
     class_names = ["resonance", "circularization", "chaos"]
     
     for i, ax in enumerate(axes):
         im = ax.pcolormesh(T, E, maps[i], shading="auto", cmap="viridis", vmin=0, vmax=1)
         ax.set_ylabel("e")
+        
         if i == len(axes) - 1:
             ax.set_xlabel(r"$\dot{\theta}$")
+            
         cbar = plt.colorbar(im, ax=ax)
         cbar.set_label(f"Probability ({class_names[i]})")
         
