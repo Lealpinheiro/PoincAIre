@@ -85,7 +85,7 @@
         }
 
         .container {
-            max-width: 960px;
+            max-width: 1040px;
             margin: 40px auto;
             padding: 0 20px;
         }
@@ -101,6 +101,87 @@
 
         .tab-content.active {
             display: block;
+        }
+
+        /* Estrutura de Layout com Abas Laterais */
+        .side-tabs-container {
+            display: flex;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .side-nav {
+            display: flex;
+            flex-direction: column;
+            width: 220px;
+            min-width: 220px;
+            border-right: 1px solid var(--border-color);
+            padding-right: 15px;
+        }
+
+        .side-nav button {
+            background: rgba(0, 11, 20, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: #8fa3b7;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            text-align: left;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .side-nav button:hover {
+            color: var(--text-bright);
+            background: rgba(0, 31, 63, 0.5);
+        }
+
+        .side-nav button.active {
+            color: var(--accent-yellow);
+            background: var(--code-bg);
+            border-left: 4px solid var(--accent-yellow);
+            border-color: var(--border-color);
+        }
+
+        .side-tab-panel {
+            display: none;
+            flex-grow: 1;
+            width: 100%;
+        }
+
+        .side-tab-panel.active {
+            display: block;
+        }
+
+        /* Renderização e alinhamento de imagens */
+        .image-row {
+            display: flex;
+            gap: 15px;
+            margin: 25px 0 10px 0;
+            justify-content: center;
+        }
+
+        .image-container {
+            flex: 1;
+            text-align: center;
+            background: var(--code-bg);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .image-caption {
+            font-size: 0.85rem;
+            color: var(--text-main);
+            margin-top: 8px;
         }
 
         h2 {
@@ -123,7 +204,7 @@
         h3 {
             color: var(--accent-soft);
             font-size: 1.45rem;
-            margin-top: 10px;
+            margin-top: 0;
             margin-bottom: 10px;
         }
 
@@ -151,7 +232,6 @@
             border-bottom: none;
         }
 
-        /* Estilo para o GIF */
         .gif-display {
             text-align: center;
             margin: 30px 0;
@@ -182,7 +262,7 @@
             border: 1px solid var(--border-color);
             border-left: 5px solid var(--accent-yellow);
             padding: 25px;
-            margin: 35px 0;
+            margin-bottom: 20px;
             border-radius: 6px;
         }
 
@@ -219,7 +299,7 @@
                 <p>Welcome to the official repository for <strong>PoincAIré</strong>. This project explores the synergy between classical dynamics and modern machine learning.</p>
                 
                 <div class="gif-display">
-                    <img src="omega_evolution.gif" alt="Evolution of Omega Dynamical Map">
+                    <img src="Figures/omega_evolution.gif" alt="Evolution of Omega Dynamical Map">
                     <p style="font-size: 0.9rem; color: var(--accent-soft); margin-top: 10px;">Fig 1: Animated evolution of the dynamical structure across varying frequencies (ω).</p>
                 </div>
 
@@ -245,14 +325,22 @@
 
         <div id="example" class="tab-content">
             <h2>Code Examples</h2>
-            <p style="color: #8fa3b7; margin-bottom: 30px;">Below is the Python implementation using XGBoost to map out spin-orbit dynamic scenarios, carefully segmented into distinct steps for each visualization.</p>
+            <p style="color: #8fa3b7; margin-bottom: 25px;">Select an example from the side menu to view its workflow execution, generated pipeline code, and dynamic mapping outputs.</p>
             
-            <div class="example-block">
-                <h3>Example 1: Generating the Dynamical Map</h3>
-                <p>This script computes the grid space and predicts discrete classifications to map out the general layout of the system.</p>
+            <div class="side-tabs-container">
+                <div class="side-nav">
+                    <button class="side-tab-button active" onclick="openSideTab(event, 'ex-dynamical')">Dynamical Maps</button>
+                    <button class="side-tab-button" onclick="openSideTab(event, 'ex-entropy')">Entropy Map</button>
+                    <button class="side-tab-button" onclick="openSideTab(event, 'ex-probability')">Probability Maps</button>
+                </div>
 
-                <h4>1.1 Dependencies & Model Loading</h4>
-                <pre><code>import numpy as np
+                <div id="ex-dynamical" class="side-tab-panel active">
+                    <div class="example-block">
+                        <h3>Example 1: Generating the Dynamical Map</h3>
+                        <p>This script computes the grid space and predicts discrete classifications to map out the general layout of the system.</p>
+
+                        <h4>1.1 Dependencies & Model Loading</h4>
+                        <pre><code>import numpy as np
 import matplotlib.pyplot as plt
 import joblib
 from matplotlib.colors import ListedColormap, BoundaryNorm
@@ -260,8 +348,8 @@ from matplotlib.colors import ListedColormap, BoundaryNorm
 # Load the pre-trained XGBoost model
 model = joblib.load("xgboost_model.pkl")</code></pre>
 
-                <h4>1.2 Parameter Configuration</h4>
-                <pre><code># Domain Settings
+                        <h4>1.2 Parameter Configuration</h4>
+                        <pre><code># Domain Settings
 omega_list = [1.34]
 theta_sel = 0.
 ecc_vals = np.linspace(0., 0.2, 300)
@@ -276,8 +364,8 @@ fig_size = (6, 5)
 cbar_kwargs = {"orientation": "horizontal", "pad": 0.15, "aspect": 40}
 save_kwargs = {"dpi": 300, "bbox_inches": "tight"}</code></pre>
 
-                <h4>1.3 Classification & Mesh Generation</h4>
-                <pre><code>for omega_sel in omega_list:
+                        <h4>1.3 Classification & Mesh Generation</h4>
+                        <pre><code>for omega_sel in omega_list:
     grid = np.c_[E.ravel(), T.ravel(), np.full(E.size, omega_sel), np.full(E.size, theta_sel)]
     
     # Predict probabilities and find the class with highest probability
@@ -298,14 +386,28 @@ save_kwargs = {"dpi": 300, "bbox_inches": "tight"}</code></pre>
     plt.tight_layout()
     plt.savefig(f"diagram_{omega_sel}.png", **save_kwargs)
     plt.close()</code></pre>
-            </div>
 
-            <div class="example-block">
-                <h3>Example 2: Generating the Entropy Map</h3>
-                <p>This snippet quantifies the classification uncertainty across the parameter boundaries using normalized Shannon entropy.</p>
+                        <div class="image-row">
+                            <div class="image-container">
+                                <img src="Figures/diagram_0.8.png" alt="Dynamical Map omega 0.8">
+                                <div class="image-caption">Dynamical Map (&omega; = 0.8)</div>
+                            </div>
+                            <div class="image-container">
+                                <img src="Figures/diagram_1.34.png" alt="Dynamical Map omega 1.34">
+                                <div class="image-caption">Dynamical Map (&omega; = 1.34)</div>
+                            </div>
+                        </div>
 
-                <h4>2.1 Shannon Entropy Calculation</h4>
-                <pre><code># (Assumes model, grid and configuration are initialized as shown in Example 1)
+                    </div>
+                </div>
+
+                <div id="ex-entropy" class="side-tab-panel">
+                    <div class="example-block">
+                        <h3>Example 2: Generating the Entropy Map</h3>
+                        <p>This snippet quantifies the classification uncertainty across the parameter boundaries using normalized Shannon entropy.</p>
+
+                        <h4>2.1 Shannon Entropy Calculation</h4>
+                        <pre><code># (Assumes model, grid and configuration are initialized as shown in Example 1)
 for omega_sel in omega_list:
     grid = np.c_[E.ravel(), T.ravel(), np.full(E.size, omega_sel), np.full(E.size, theta_sel)]
     probs = model.predict_proba(grid)
@@ -317,8 +419,8 @@ for omega_sel in omega_list:
     entropy_normalized = entropy / max_entropy
     entropy_map = entropy_normalized.reshape(E.shape)</code></pre>
 
-                <h4>2.2 Mapping Uncertainty</h4>
-                <pre><code>    # Plotting the Uncertainty/Entropy Map
+                        <h4>2.2 Mapping Uncertainty</h4>
+                        <pre><code>    # Plotting the Uncertainty/Entropy Map
     plt.figure(figsize=fig_size)
     img = plt.pcolormesh(T, E, entropy_map, shading="auto", cmap="inferno", vmin=0, vmax=1)
     
@@ -330,14 +432,28 @@ for omega_sel in omega_list:
     plt.tight_layout()
     plt.savefig(f"uncertainty_{omega_sel}.png", **save_kwargs)
     plt.close()</code></pre>
-            </div>
 
-            <div class="example-block">
-                <h3>Example 3: Individual Class Probability Maps</h3>
-                <p>This script slices the output array to map out the individual, standalone probabilities for each specific regime.</p>
+                        <div class="image-row">
+                            <div class="image-container">
+                                <img src="Figures/uncertainty_0.8.png" alt="Entropy Map omega 0.8">
+                                <div class="image-caption">Entropy Map (&omega; = 0.8)</div>
+                            </div>
+                            <div class="image-container">
+                                <img src="Figures/uncertainty_1.34.png" alt="Entropy Map omega 1.34">
+                                <div class="image-caption">Entropy Map (&omega; = 1.34)</div>
+                            </div>
+                        </div>
 
-                <h4>3.1 Isolating Class Matrices</h4>
-                <pre><code># (Assumes model, grid and configuration are initialized as shown in Example 1)
+                    </div>
+                </div>
+
+                <div id="ex-probability" class="side-tab-panel">
+                    <div class="example-block">
+                        <h3>Example 3: Individual Class Probability Maps</h3>
+                        <p>This script slices the output array to map out the individual, standalone probabilities for each specific regime.</p>
+
+                        <h4>3.1 Isolating Class Matrices</h4>
+                        <pre><code># (Assumes model, grid and configuration are initialized as shown in Example 1)
 for omega_sel in omega_list:
     grid = np.c_[E.ravel(), T.ravel(), np.full(E.size, omega_sel), np.full(E.size, theta_sel)]
     probs = model.predict_proba(grid)
@@ -347,8 +463,8 @@ for omega_sel in omega_list:
     P_circ = probs[:, 1].reshape(E.shape)
     P_chaos = probs[:, 2].reshape(E.shape)</code></pre>
 
-                <h4>3.2 Generating Subplots</h4>
-                <pre><code>    # Initialize a 3-row stacked subplot layout
+                        <h4>3.2 Generating Subplots</h4>
+                        <pre><code>    # Initialize a 3-row stacked subplot layout
     fig, axes = plt.subplots(3, 1, figsize=(6, 10), sharex=True)
     maps = [P_res, P_circ, P_chaos]
     class_names = ["resonance", "circularization", "chaos"]
@@ -366,6 +482,20 @@ for omega_sel in omega_list:
     plt.tight_layout()
     plt.savefig(f"probability_{omega_sel}.png")
     plt.close()</code></pre>
+
+                        <div class="image-row">
+                            <div class="image-container">
+                                <img src="Figures/probability_0.8.png" alt="Probability Map omega 0.8">
+                                <div class="image-caption">Probability Map (&omega; = 0.8)</div>
+                            </div>
+                            <div class="image-container">
+                                <img src="Figures/probability_1.34.png" alt="Probability Map omega 1.34">
+                                <div class="image-caption">Probability Map (&omega; = 1.34)</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -375,18 +505,41 @@ for omega_sel in omega_list:
         function openTab(evt, tabName) {
             var i, tabcontent, tabbuttons;
             
+            // Esconde todos os conteúdos das abas principais removendo a classe 'active'
             tabcontent = document.getElementsByClassName("tab-content");
             for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].className = tabcontent[i].className.replace(" active", "");
+                tabcontent[i].classList.remove("active");
             }
             
+            // Remove a classe 'active' de todos os botões do menu superior
             tabbuttons = document.getElementsByClassName("tab-button");
             for (i = 0; i < tabbuttons.length; i++) {
-                tabbuttons[i].className = tabbuttons[i].className.replace(" active", "");
+                tabbuttons[i].classList.remove("active");
             }
             
-            document.getElementById(tabName).className += " active";
-            evt.currentTarget.className += " active";
+            // Mostra a aba atual e adiciona a classe 'active' ao botão clicado
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        function openSideTab(evt, sideTabName) {
+            var i, sidecontent, sidebuttons;
+            
+            // Esconde todos os painéis das abas laterais removendo a classe 'active'
+            sidecontent = document.getElementsByClassName("side-tab-panel");
+            for (i = 0; i < sidecontent.length; i++) {
+                sidecontent[i].classList.remove("active");
+            }
+            
+            // Remove a classe 'active' de todos os botões do menu lateral
+            sidebuttons = document.getElementsByClassName("side-tab-button");
+            for (i = 0; i < sidebuttons.length; i++) {
+                sidebuttons[i].classList.remove("active");
+            }
+            
+            // Mostra o painel lateral atual e ativa o respetivo botão
+            document.getElementById(sideTabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
         }
     </script>
 </body>
