@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PoincAIré</title>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --bg-color: #001226;        /* Deep navy blue */
+            --card-bg: #001f3f;         /* Medium navy for cards */
+            --code-bg: #000b14;         /* Very dark navy for code blocks */
+            --text-main: #c2d1e0;       /* Light, clean main text */
+            --text-bright: #ffffff;     /* Pure white for inner headers */
+            --accent-yellow: #ffd700;   /* Vibrant gold for highlights */
+            --accent-soft: #ffe680;     /* Soft yellow for secondary elements */
+            --border-color: #1a3a5c;    /* Subtle blue borders */
+
+            /* Python Syntax Highlighting Colors */
+            --py-comment: #7289da;      /* Grayish blue for comments */
+            --py-keyword: #4fffcb;      /* Cyan for keywords */
+            --py-builtin: #ff79c6;      /* Pink for builtins/functions */
+            --py-string: #f1fa8c;       /* Soft yellow/green for strings */
+            --py-number: #bd93f9;       /* Purple for numbers */
+            --py-text: #f8f8f2;         /* Off-white for standard code text */
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-main);
+            background-color: var(--bg-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(180deg, #001f3f 0%, var(--bg-color) 100%);
+            padding: 60px 0 40px 0;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* 3D Dynamic Design for PoincAIré */
+        header h1 {
+            margin: 0;
+            font-size: 5.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            display: inline-block;
+            background: linear-gradient(135deg, #ffd700 0%, #ffaa00 50%, #ffe680 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.5));
+            animation: pulse-glow 4s ease-in-out infinite alternate;
+            
+            /* High-definition 3D depth layering */
+            text-shadow: 
+                0 1px 0 #ccac00,
+                0 2px 0 #b39700,
+                0 3px 0 #998100,
+                0 4px 0 #806c00,
+                0 5px 15px rgba(0,0,0,0.6);
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                filter: drop-shadow(0 2px 5px rgba(255,215,0,0.2));
+            }
+            100% {
+                filter: drop-shadow(0 5px 20px rgba(255,215,0,0.5));
+            }
+        }
+
+        .subtitle {
+            font-style: normal;
+            font-weight: 400;
+            color: #a0b2c6;
+            font-size: 1.4rem;
+            max-width: 900px;
+            margin: 20px auto 0 auto;
+            line-height: 1.5;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        nav {
+            background-color: rgba(0, 31, 63, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            padding: 18px 30px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            cursor: pointer;
+            color: #8fa3b7;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        nav button:hover {
+            color: var(--accent-soft);
+        }
+
+        nav button.active {
+            color: var(--accent-yellow);
+            border-bottom: 3px solid var(--accent-yellow);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .tab-content {
+            display: none;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-sizing: border-box;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .side-tabs-container {
+            display: flex;
+            gap: 25px;
+            margin-top: 20px;
+            align-items: flex-start;
+        }
+
+        .side-nav {
+            display: flex;
+            flex-direction: column;
+            width: 240px;
+            min-width: 240px;
+            border-right: 1px solid var(--border-color);
+            padding-right: 15px;
+        }
+
+        .side-nav button {
+            background: rgba(0, 11, 20, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: #8fa3b7;
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            text-align: left;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .side-nav button:hover {
+            color: var(--text-bright);
+            background: rgba(0, 31, 63, 0.5);
+        }
+
+        .side-nav button.active {
+            color: var(--accent-yellow);
+            background: var(--code-bg);
+            border-left: 4px solid var(--accent-yellow);
+            border-color: var(--border-color);
+        }
+
+        .side-tab-panel {
+            display: none;
+            flex: 1;
+            min-width: 0; 
+        }
+
+        .side-tab-panel.active {
+            display: block;
+        }
+
+        .image-row {
+            display: flex;
+            gap: 15px;
+            margin: 25px 0 10px 0;
+            justify-content: center;
+        }
+
+        .image-container {
+            flex: 1;
+            text-align: center;
+            background: var(--code-bg);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .image-caption {
+            font-size: 1rem;
+            color: var(--text-main);
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            color: var(--accent-yellow);
+            margin-top: 0;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        h3 {
+            color: var(--accent-soft);
+            font-size: 1.65rem;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        h4 {
+            color: #a0b2c6;
+            font-size: 1.15rem;
+            margin-top: 25px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        p {
+            color: var(--text-main);
+            font-size: 1.2rem;
+            text-align: justify;
+        }
+
+        ul {
+            color: var(--text-main);
+            font-size: 1.2rem;
+            padding-left: 20px;
+            text-align: justify;
+        }
+
+        li {
+            margin-bottom: 12px;
+        }
+
+        .section-block {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        }
+        
+        .section-block:last-child {
+            border-bottom: none;
+        }
+
+        .gif-row {
+            display: flex;
+            gap: 20px;
+            margin: 30px 0;
+            justify-content: center;
+        }
+
+        .gif-container {
+            flex: 1;
+            text-align: center;
+        }
+
+        .gif-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 2px solid var(--accent-yellow);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+        }
+
+        .color-square {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            display: inline-block;
+        }
+
+        .square-blue { background-color: #007bff; }
+        .square-red { background-color: #ff4d4d; }
+        .square-green { background-color: #28a745; }
+
+        .equation-block {
+            padding: 15px 0;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 1.35rem;
+            background: transparent;
+            border: none;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            color: var(--py-text);
+            max-width: 100%;
+            box-sizing: border-box;
+            text-align: left;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        .c { color: var(--py-comment); font-style: italic; }   /* Comment */
+        .k { color: var(--py-keyword); font-weight: bold; }   /* Keyword */
+        .f { color: var(--py-builtin); }                      /* Function/Builtin */
+        .s { color: var(--py-string); }                       /* String */
+        .n { color: var(--py-number); }                       /* Number */
+
+        .example-block {
+            background: #001730;
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--accent-yellow);
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        .team-container {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            background: var(--code-bg);
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            margin-top: 20px;
+        }
+
+        .team-logo {
+            flex: 0 0 200px;
+            text-align: center;
+        }
+
+        .team-logo img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+        }
+
+        .team-details {
+            flex: 1;
+        }
+
+        .team-details ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .install-link {
+            color: var(--accent-soft);
+            text-decoration: underline;
+            word-break: break-all;
+        }
+        .install-link:hover {
+            color: var(--accent-yellow);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>PoincAIré</h1>
+        <div class="subtitle">Classification Learning of Spin-Orbit Dynamical Structures via Poincaré Surface of Section</div>
+    </header>
+
+    <nav>
+        <button class="tab-button active" onclick="openTab(event, 'home')">Home</button>
+        <button class="tab-button" onclick="openTab(event, 'install')">Install</button>
+        <button class="tab-button" onclick="openTab(event, 'example')">Example</button>
+    </nav>
+
+    <div class="container">
+        
+        <div id="home" class="tab-content active">
+            <div class="section-block">
+                <h2>Welcome to PoincAIré's Documentation!</h2>
+                
+                <p>PoincAIré is an ensemble of open-source machine learning models designed to investigate the spin-orbit dynamics of an elongated satellite under the gravitational attraction of a central spherical body, where the shape of the satellite is characterized by the asymmetry parameter $\omega = \sqrt{3(B-A)/C}$ (with $A < B < C$ representing the principal moments of inertia).</p>
+                
+                <p>Through the Poincaré Surface of Section (PSS) technique, researchers can explore the spin-orbit phase space of the satellite across different initial orbital conditions and body shapes. However, manual visual classification of these sections across extensive parameter spaces is traditionally time-consuming and computationally expensive.</p>
+
+                <p>PoincAIré bridges this gap by employing machine learning to automatically classify PSS structures and predict dynamical states directly from initial conditions.</p>
+            </div>
+
+            <div class="section-block">
+                <h2>Application on Artificial Satellite</h2>
+                <p>Artificial satellites are generally in a state of synchronous rotation, meaning that they rotate at the same rate as they orbit the Earth, thereby continuously keeping the same face oriented toward the Earth. Consider an elongated satellite in an eccentric orbit ($e$) around a spherical body, with semi-major axis and mean motion normalized to 1 ($T = 2\pi$). Let $f$ be the true anomaly, $r$ be the radial distance, and $\gamma$ be the orientation of the satellite's longest principal axis relative to $r$. The equation of motion for the angular orientation $\theta$ of the satellite relative to a reference line in space (see Fig. 1) is expressed by:</p>
+                
+                <div class="equation-block">
+                    $$\ddot{\theta} + \frac{\omega^2}{2r^3} \sin [2(\theta - f)] = 0$$
+                </div>
+
+                <p>Figure 2 shows a mosaic of a PPS map in the $(\theta, \dot{\theta})$ phase space for a satellite with $\omega = 1.34$ and different eccentricities. The colors represent the different spin-orbit resonances, and the type of resonance is indicated in the figure.</p>
+
+                <div class="image-row">
+                    <div class="image-container">
+                        <img src="Figures/Corpo.png" alt="Geometric representation of the spin-orbit dynamical system">
+                        <div class="image-caption">Fig 1: Schematic illustration of an artificial satellite orbiting the Earth, including the angular and orbital parameters involved in this dynamical system.</div>
+                    </div>
+                    <div class="image-container">
+                        <img src="Figures/omega_134.png" alt="PPS map mosaic in phase space">
+                        <div class="image-caption">Fig 2: Mosaic of a PPS map in the $(\theta, \dot{\theta})$ phase space for $\omega = 1.34$ and different eccentricities.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h2>Key Features & Model Pipeline</h2>
+                <p>Our pipeline uses two different machine learning models, each tailored for a specific task:</p>
+                
+                <ul>
+                    <li>
+                        <strong>1. Image Classification via Convolutional Neural Network (CNN)</strong>
+                        <ul>
+                            <li><strong>Purpose:</strong> A classification model based on Convolutional Neural Networks (CNN) and Vision Transformer (ViT) architectures are trained to automatically identify three distinct dynamical regimes directly from PSS images: Resonance, Circulation, and Chaos.</li>
+                            <li><strong>Performance:</strong> Achieved <strong>98.6% accuracy</strong>. Note that performance may decrease on low-resolution Poincaré maps sampled with fewer than 500 points.</li>
+                        </ul>
+                    </li>
+                    <li style="margin-top: 15px;">
+                        <strong>2. Dynamical Regime Prediction via XGBoost</strong>
+                        <ul>
+                            <li><strong>Purpose:</strong> This model receives the system's initial condition parameters as input and predicts the probability of the trajectory belonging to each dynamical class, speeding up parameter sweeps and enabling high-resolution stability mapping.</li>
+                            <li><strong>Performance:</strong> Achieved <strong>~97% accuracy</strong>. Beyond predicting class probabilities, combining these predictions with normalized entropy allows users to identify and analyze low-confidence classification regions.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <p>The animation on the left shows several PPS maps classified by the image classification model, whereas the animation on the right presents multiple dynamical maps in the (e, thetadot) phase space generated for different parameter values predicted by the XGBoost models. The color of each class in animations are:</p>
+                
+                <ul style="list-style-type: none; padding-left: 10px;">
+                    <li><span class="color-square square-blue"></span> <strong>Blue:</strong> Resonant class</li>
+                    <li><span class="color-square square-red"></span> <strong>Red:</strong> Circulation class</li>
+                    <li><span class="color-square square-green"></span> <strong>Green:</strong> Chaos class</li>
+                </ul>
+
+                <div class="gif-row">
+                    <div class="gif-container">
+                        <img src="Figures/PPS_maps.gif" alt="PPS maps classified by image classification model">
+                        <p style="font-size: 1.05rem; color: var(--accent-soft); margin-top: 10px; text-align: center;">Fig 3: PPS maps classified by image classification model</p>
+                    </div>
+                    <div class="gif-container">
+                        <img src="Figures/omega_evolution.gif" alt="Evolution of the dynamical structure across varying asymmetry parameter">
+                        <p style="font-size: 1.05rem; color: var(--accent-soft); margin-top: 10px; text-align: center;">Fig 4: Evolution of the dynamical structure across varying asymmetry parameter.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h2>Research Team</h2>
+                <div class="team-container">
+                    <div class="team-logo">
+                        <img src="Figures/GDOP.png" alt="GDOP Logo">
+                    </div>
+                    <div class="team-details">
+                        <p style="margin-top: 0;">We are part of the <strong>Grupo de Dinâmica Orbital e Planetologia (GDOP)</strong> at <strong>São Paulo State University (UNESP)</strong>.</p>
+                        <ul>
+                            <li>Othon C. Winter</li>
+                            <li>Tiago F. L. L. Pinheiro</li>
+                            <li>Giovana Ramon</li>
+                            <li>Lucas S. Pereira</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h2>Published Papers</h2>
+                <p style="font-family: inherit;">
+                    Winter, O. C.; Pinheiro, T. F. L. L.; Ramon, G.; Pereira, L. S.; Callegari, N.<br>
+                    On the spin-orbit phase-space of an artificial satellite.<br>
+                    <em>European Physical Journal -- Special Topics</em>, 2025.<br>
+                    DOI: <a href="https://doi.org/10.1140/epjs/s11734-025-01868-6" style="color: var(--accent-soft);">10.1140/epjs/s11734-025-01868-6</a>
+                </p>
+                <p style="font-family: inherit; margin-top: 15px;">
+                    Ramon, G.; Pinheiro, T. F. L. L.; Pereira, L. S.; Winter, O. C.<br>
+                    PoincAIré: Classification Learning of Spin-Orbit Dynamical Structures via Poincaré Surface of Section.<br>
+                    <em>European Physical Journal</em> (Submitted)
+                </p>
+            </div>
+        </div>
+
+        <div id="install" class="tab-content">
+            <h2>Installation & Models</h2>
+            <p>To run the examples and use the classification models, please download the machine learning models from the GitHub repository:</p>
+            <p><a class="install-link" href="https://github.com/Lealpinheiro/PoincAIre" target="_blank" rel="noopener noreferrer">git@github.com:Lealpinheiro/PoincAIre.git</a></p>
+            
+            <h4>Clone Repository</h4>
+            <pre><code>git clone git@github.com:Lealpinheiro/PoincAIre.git
+cd PoincAIre</code></pre>
+        </div>
+
+        <div id="example" class="tab-content">
+            <h2>Code Examples</h2>
+            <p style="color: #8fa3b7; margin-bottom: 25px;">Select an example from the side menu to view its workflow execution, generated pipeline code, and dynamic mapping outputs.</p>
+            
+            <div class="side-tabs-container">
+                <div class="side-nav">
+                    <button class="side-tab-button active" onclick="openSideTab(event, 'ex-dynamical')">Dynamical Maps</button>
+                    <button class="side-tab-button" onclick="openSideTab(event, 'ex-entropy')">Entropy Map</button>
+                    <button class="side-tab-button" onclick="openSideTab(event, 'ex-probability')">Probability Maps</button>
+                    <button class="side-tab-button" onclick="openSideTab(event, 'ex-pps')">PPS Maps</button>
+                </div>
+
+                <div id="ex-dynamical" class="side-tab-panel active">
+                    <div class="example-block">
+                        <h3>Example 1: Generating the Dynamical Map</h3>
+                        <p>This script computes the grid space and predicts discrete classifications to map out the general layout of the system.</p>
+
+                        <h4>Dependencies & Model Loading</h4>
+                        <pre><code><span class="k">import</span> numpy <span class="k">as</span> np  <span class="c"># Array operations</span>
+<span class="k">import</span> matplotlib.pyplot <span class="k">as</span> plt  <span class="c"># Plotting tool</span>
+<span class="k">import</span> joblib  <span class="c"># Model loading tool</span>
+<span class="k">from</span> matplotlib.colors <span class="k">import</span> ListedColormap, BoundaryNorm  <span class="c"># Colormap tools</span>
+
+<span class="c"># Load pre-trained XGBoost model</span>
+model = joblib.<span class="f">load</span>(<span class="s">"xgboost_model.pkl"</span>)</code></pre>
+
+                        <h4>Parameter Configuration</h4>
+                        <pre><code><span class="c"># Domain Settings</span>
+omega_list = [<span class="n">1.34</span>]  <span class="c"># Target frequency</span>
+theta_sel = <span class="n">0.</span>  <span class="c"># Fixed angle section</span>
+ecc_vals = np.<span class="f">linspace</span>(<span class="n">0.</span>, <span class="n">0.2</span>, <span class="n">300</span>)  <span class="c"># Eccentricity range</span>
+thetadot_vals = np.<span class="f">linspace</span>(<span class="n">-1.</span>, <span class="n">4.</span>, <span class="n">300</span>)  <span class="c"># Angular velocity range</span>
+E, T = np.<span class="f">meshgrid</span>(ecc_vals, thetadot_vals)  <span class="c"># 2D grid generation</span>
+
+<span class="c"># Visualization Settings</span>
+cmap_regimes = <span class="f">ListedColormap</span>([<span class="s">"blue"</span>, <span class="s">"red"</span>, <span class="s">"green"</span>])  <span class="c"># Colormap colors</span>
+norm = <span class="f">BoundaryNorm</span>([<span class="n">-0.5</span>, <span class="n">0.5</span>, <span class="n">1.5</span>, <span class="n">2.5</span>], cmap_regimes.N)  <span class="c"># Bounds for discrete classes</span>
+class_names = [<span class="s">"resonance"</span>, <span class="s">"circularization"</span>, <span class="s">"chaos"</span>]  <span class="c"># Class labels</span>
+fig_size = (<span class="n">6</span>, <span class="n">5</span>)  <span class="c"># Plot dimensions</span>
+cbar_kwargs = {<span class="s">"orientation"</span>: <span class="s">"horizontal"</span>, <span class="s">"pad"</span>: <span class="n">0.15</span>, <span class="s">"aspect"</span>: <span class="n">40</span>}  <span class="c"># Colorbar layout</span>
+save_kwargs = {<span class="s">"dpi"</span>: <span class="n">300</span>, <span class="s">"bbox_inches"</span>: <span class="s">"tight"</span>}  <span class="c"># File export quality</span></code></pre>
+
+                        <h4>Classification & Mesh Generation</h4>
+                        <pre><code><span class="k">for</span> omega_sel <span class="k">in</span> omega_list:
+    <span class="c"># Build 2D test feature grid [ecc, thetadot, omega, theta]</span>
+    grid = np.c_[E.<span class="f">ravel</span>(), T.<span class="f">ravel</span>(), np.<span class="f">full</span>(E.size, omega_sel), np.<span class="f">full</span>(E.size, theta_sel)]
+    
+    <span class="c"># Predict probability distribution and pick the highest index</span>
+    probs = model.<span class="f">predict_proba</span>(grid)
+    pred_class = np.<span class="f">argmax</span>(probs, axis=<span class="n">1</span>).<span class="f">reshape</span>(E.shape)
+    
+    <span class="c"># Plotting layout</span>
+    plt.<span class="f">figure</span>(figsize=fig_size)
+    img = plt.<span class="f">pcolormesh</span>(T, E, pred_class, cmap=cmap_regimes, norm=norm, shading=<span class="s">"auto"</span>)
+    plt.<span class="f">xlabel</span>(<span class="s">r"$\dot{\theta}$"</span>, fontsize=<span class="n">16</span>)
+    plt.<span class="f">ylabel</span>(<span class="s">"e"</span>, fontsize=<span class="n">16</span>)
+    
+    <span class="c"># Colorbar format</span>
+    cbar = plt.<span class="f">colorbar</span>(img, **cbar_kwargs)
+    cbar.<span class="f">set_ticks</span>([<span class="n">0</span>, <span class="n">1</span>, <span class="n">2</span>])
+    cbar.<span class="f">set_ticklabels</span>(class_names)
+    cbar.<span class="f">set_label</span>(<span class="s">"Dynamical regime"</span>, fontsize=<span class="n">14</span>)
+    
+    plt.<span class="f">tight_layout</span>()
+    plt.<span class="f">savefig</span>(<span class="s">f"diagram_{omega_sel}.png"</span>, **save_kwargs)
+    plt.<span class="f">close</span>()</code></pre>
+
+                        <div class="image-row">
+                            <div class="image-container">
+                                <img src="Figures/diagram_0.8.png" alt="Dynamical Map omega 0.8">
+                                <div class="image-caption">Dynamical Map (&omega; = 0.8)</div>
+                            </div>
+                            <div class="image-container">
+                                <img src="Figures/diagram_1.34.png" alt="Dynamical Map omega 1.34">
+                                <div class="image-caption">Dynamical Map (&omega; = 1.34)</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="ex-entropy" class="side-tab-panel">
+                    <div class="example-block">
+                        <h3>Example 2: Generating the Entropy Map</h3>
+                        <p>This snippet quantifies the classification uncertainty across the parameter boundaries using normalized Shannon entropy.</p>
+
+                        <h4>Shannon Entropy Calculation</h4>
+                        <pre><code><span class="k">for</span> omega_sel <span class="k">in</span> omega_list:
+    <span class="c"># Setup standard tracking grid matrix</span>
+    grid = np.c_[E.<span class="f">ravel</span>(), T.<span class="f">ravel</span>(), np.<span class="f">full</span>(E.size, omega_sel), np.<span class="f">full</span>(E.size, theta_sel)]
+    probs = model.<span class="f">predict_proba</span>(grid)
+    
+    <span class="c"># Calculate normalized Shannon Entropy for a 3-class system</span>
+    eps = <span class="n">1e-12</span>  <span class="c"># Tiny safety threshold to avoid log(0) error</span>
+    entropy = -np.<span class="f">sum</span>(probs * np.<span class="f">log</span>(probs + eps), axis=<span class="n">1</span>)  <span class="c"># Core entropy sum</span>
+    max_entropy = np.<span class="f">log</span>(<span class="n">3</span>)  <span class="c"># Maximum uncertainty cap</span>
+    entropy_normalized = entropy / max_entropy  <span class="c"># Scale bounds strictly to [0, 1]</span>
+    entropy_map = entropy_normalized.<span class="f">reshape</span>(E.shape)  <span class="c"># Reshape vector to 2D grid</span></code></pre>
+
+                        <h4>Mapping Uncertainty</h4>
+                        <pre><code>    <span class="c"># Render Uncertainty Map</span>
+    plt.<span class="f">figure</span>(figsize=fig_size)
+    img = plt.<span class="f">pcolormesh</span>(T, E, entropy_map, shading=<span class="s">"auto"</span>, cmap=<span class="s">"inferno"</span>, vmin=<span class="n">0</span>, vmax=<span class="n">1</span>)
+    
+    <span class="c"># Colorbar properties</span>
+    cbar = plt.<span class="f">colorbar</span>(img, **cbar_kwargs)
+    cbar.<span class="f">set_label</span>(<span class="s">"Entropy"</span>, fontsize=<span class="n">14</span>)
+    plt.<span class="f">xlabel</span>(<span class="s">r"$\dot{\theta}$"</span>, fontsize=<span class="n">16</span>)
+    plt.<span class="f">ylabel</span>(<span class="s">"e"</span>, fontsize=<span class="n">16</span>)
+    
+    plt.<span class="f">tight_layout</span>()
+    plt.<span class="f">savefig</span>(<span class="s">f"uncertainty_{omega_sel}.png"</span>, **save_kwargs)
+    plt.<span class="f">close</span>()</code></pre>
+
+                        <div class="image-row">
+                            <div class="image-container">
+                                <img src="Figures/uncertainty_0.8.png" alt="Entropy Map omega 0.8">
+                                <div class="image-caption">Entropy Map (&omega; = 0.8)</div>
+                            </div>
+                            <div class="image-container">
+                                <img src="Figures/uncertainty_1.34.png" alt="Entropy Map omega 1.34">
+                                <div class="image-caption">Entropy Map (&omega; = 1.34)</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="ex-probability" class="side-tab-panel">
+                    <div class="example-block">
+                        <h3>Example 3: Individual Class Probability Maps</h3>
+                        <p>This script slices the output array to map out the individual, standalone probabilities for each specific regime.</p>
+
+                        <h4>Isolating Class Matrices</h4>
+                        <pre><code><span class="k">for</span> omega_sel <span class="k">in</span> omega_list:
+    <span class="c"># Setup coordinates matrix arrays</span>
+    grid = np.c_[E.<span class="f">ravel</span>(), T.<span class="f">ravel</span>(), np.<span class="f">full</span>(E.size, omega_sel), np.<span class="f">full</span>(E.size, theta_sel)]
+    probs = model.<span class="f">predict_proba</span>(grid)
+    
+    <span class="c"># Slice single probabilities for each target state</span>
+    P_res = probs[:, <span class="n">0</span>].<span class="f">reshape</span>(E.shape)    <span class="c"># Slice Resonance data</span>
+    P_circ = probs[:, <span class="n">1</span>].<span class="f">reshape</span>(E.shape)   <span class="c"># Slice Circularization data</span>
+    P_chaos = probs[:, <span class="n">2</span>].<span class="f">reshape</span>(E.shape)  <span class="c"># Slice Chaos data</span></code></pre>
+
+                        <h4>Generating Subplots</h4>
+                        <pre><code>    <span class="c"># Setup a vertically stacked multi-panel layout (3 rows, 1 col)</span>
+    fig, axes = plt.<span class="f">subplots</span>(<span class="n">3</span>, <span class="n">1</span>, figsize=(<span class="n">6</span>, <span class="n">10</span>), sharex=<span class="k">True</span>)
+    maps = [P_res, P_circ, P_chaos]  <span class="c"># Data array collection</span>
+    class_names = [<span class="s">"resonance"</span>, <span class="s">"circularization"</span>, <span class="s">"chaos"</span>]
+    
+    <span class="k">for</span> i, ax <span class="k">in</span> <span class="f">enumerate</span>(axes):
+        <span class="c"># Render continuous colormap layer using 'viridis'</span>
+        im = ax.<span class="f">pcolormesh</span>(T, E, maps[i], shading=<span class="s">"auto"</span>, cmap=<span class="s">"viridis"</span>, vmin=<span class="n">0</span>, vmax=<span class="n">1</span>)
+        ax.<span class="f">set_ylabel</span>(<span class="s">"e"</span>)
+        
+        <span class="c"># Keep horizontal labels only on the bottom panel</span>
+        <span class="k">if</span> i == <span class="f">len</span>(axes) - <span class="n">1</span>:
+            ax.<span class="f">set_xlabel</span>(<span class="s">r"$\dot{\theta}$"</span>)
+            
+        <span class="c"># Hook local indicator bar to individual panel</span>
+        cbar = plt.<span class="f">colorbar</span>(im, ax=ax)
+        cbar.<span class="f">set_label</span>(<span class="s">f"Probability ({class_names[i]})"</span>)
+        
+    plt.<span class="f">tight_layout</span>()
+    plt.<span class="f">savefig</span>(<span class="s">f"probability_{omega_sel}.png"</span>)
+    plt.<span class="f">close</span>()</code></pre>
+
+                        <div class="image-row">
+                            <div class="image-container">
+                                <img src="Figures/probability_0.8.png" alt="Probability Map omega 0.8">
+                                <div class="image-caption">Probability Map (&omega; = 0.8)</div>
+                            </div>
+                            <div class="image-container">
+                                <img src="Figures/probability_1.34.png" alt="Probability Map omega 1.34">
+                                <div class="image-caption">Probability Map (&omega; = 1.34)</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="ex-pps" class="side-tab-panel">
+                    <div class="example-block">
+                        <h3>Example 4: Image Classification on PSS Maps</h3>
+                        <p>Load trajectory data from text files, generate individual curve plots for CNN batch inference, and visualize the trajectories colored by their predicted dynamical regime on a Poincaré Surface of Section.</p>
+
+                        <h4>Imports & Configuration</h4>
+                        <pre><code><span class="k">import</span> matplotlib
+matplotlib.<span class="f">use</span>(<span class="s">"Agg"</span>)  <span class="c"># Use "Agg" if running headlessly</span>
+<span class="k">import</span> matplotlib.pyplot <span class="k">as</span> plt
+<span class="k">import</span> numpy <span class="k">as</span> np
+<span class="k">from</span> PIL <span class="k">import</span> Image
+<span class="k">import</span> os
+<span class="k">from</span> tensorflow.keras.models <span class="k">import</span> load_model
+<span class="k">from</span> matplotlib.lines <span class="k">import</span> Line2D
+
+<span class="c"># Model & Data Configuration</span>
+model_path = <span class="s">"poincare_classifier.keras"</span>
+n_points_per_curve = <span class="n">1001</span>
+img_size = (<span class="n">128</span>, <span class="n">128</span>)
+n_ic = <span class="n">40</span>
+target_files = [<span class="s">"ecc_00000.txt"</span>]
+omega_value = <span class="n">0.3</span>
+
+<span class="c"># Class Mapping</span>
+class_names = [<span class="s">"chaos"</span>, <span class="s">"close"</span>, <span class="s">"open"</span>]
+color_map = {
+    <span class="s">"close"</span>: <span class="s">"blue"</span>,
+    <span class="s">"open"</span>: <span class="s">"red"</span>,
+    <span class="s">"chaos"</span>: <span class="s">"green"</span>
+}
+
+<span class="c"># Load Model</span>
+<span class="f">print</span>(<span class="s">"Loading model..."</span>)
+model = <span class="f">load_model</span>(model_path)</code></pre>
+
+                        <h4>Helper Functions</h4>
+                        <pre><code><span class="k">def</span> <span class="f">normalize_theta</span>(theta):
+    <span class="k">return</span> ((theta + np.pi/<span class="n">2</span>) % np.pi) - np.pi/<span class="n">2</span>
+
+<span class="k">def</span> <span class="f">figure_to_input</span>(theta, theta_dot, img_size=(<span class="n">128</span>,<span class="n">128</span>), dpi=<span class="n">150</span>):
+    fig, ax = plt.<span class="f">subplots</span>(figsize=(<span class="n">3</span>,<span class="n">3</span>), dpi=dpi)
+    ax.<span class="f">scatter</span>(theta, theta_dot, s=<span class="n">1</span>, c=<span class="s">"black"</span>)
+    ax.<span class="f">set_xticks</span>([])
+    ax.<span class="f">set_yticks</span>([])
+    ax.<span class="f">axis</span>(<span class="s">"off"</span>)
+
+    fig.canvas.<span class="f">draw</span>()
+    img = np.<span class="f">frombuffer</span>(fig.canvas.<span class="f">tostring_rgb</span>(), dtype=np.uint8)
+    img = img.<span class="f">reshape</span>(fig.canvas.<span class="f">get_width_height</span>()[::-<span class="n">1</span>] + (<span class="n">3</span>,))
+    plt.<span class="f">close</span>(fig)
+
+    img = Image.<span class="f">fromarray</span>(img).<span class="f">resize</span>(img_size)
+    img = np.<span class="f">array</span>(img).<span class="f">astype</span>(<span class="s">"float32"</span>) / <span class="n">255.0</span>
+    img = np.<span class="f">expand_dims</span>(img, axis=<span class="n">0</span>)
+    <span class="k">return</span> img</code></pre>
+
+                        <h4>Processing & Visualization Loop</h4>
+                        <pre><code><span class="k">for</span> ecc_file <span class="k">in</span> target_files:
+    <span class="k">if not</span> os.path.<span class="f">exists</span>(ecc_file):
+        <span class="f">print</span>(<span class="s">f"File not found: {ecc_file}, skipping..."</span>)
+        <span class="k">continue</span>
+
+    <span class="f">print</span>(<span class="s">f"\nProcessing file: {ecc_file}"</span>)
+    ecc_data = np.<span class="f">loadtxt</span>(ecc_file)
+    
+    <span class="c"># Extract eccentricity value from filename</span>
+    ecc_string = os.path.splitext(ecc_file)[<span class="n">0</span>].<span class="f">replace</span>(<span class="s">"ecc_"</span>, <span class="s">""</span>) 
+    eccentricity_value = <span class="f">float</span>(ecc_string) / <span class="n">10000</span>
+
+    curves_data = []
+    batch_imgs = []
+
+    <span class="c"># 1. Extract data and prepare CNN inputs</span>
+    <span class="k">for</span> ci <span class="k">in</span> <span class="f">range</span>(n_ic):
+        start = ci * n_points_per_curve
+        end   = start + n_points_per_curve
+        curve = ecc_data[start:end]
+
+        theta_vals = <span class="f">normalize_theta</span>(curve[:, <span class="n">2</span>])
+        theta_dot_vals = curve[:, <span class="n">3</span>]
+        
+        curves_data.<span class="f">append</span>((theta_vals, theta_dot_vals))
+
+        <span class="c"># Generate image for CNN inference</span>
+        img = <span class="f">figure_to_input</span>(theta_vals, theta_dot_vals, img_size=img_size)
+        batch_imgs.<span class="f">append</span>(img[<span class="n">0</span>])
+
+    <span class="c"># 2. Predict classes in batch</span>
+    batch_imgs = np.<span class="f">array</span>(batch_imgs)
+    probs_batch = model.<span class="f">predict</span>(batch_imgs, verbose=<span class="n">0</span>)
+    
+    <span class="c"># 3. Create Poincaré Plot</span>
+    fig, ax = plt.<span class="f">subplots</span>(figsize=(<span class="n">8</span>, <span class="n">6</span>), dpi=<span class="n">150</span>)
+    
+    <span class="k">for</span> ci <span class="k">in</span> <span class="f">range</span>(n_ic):
+        theta_vals, theta_dot_vals = curves_data[ci]
+        probs = probs_batch[ci]
+        
+        pred_idx = np.<span class="f">argmax</span>(probs)
+        pred_class = class_names[pred_idx]
+        plot_color = color_map[pred_class]
+
+        ax.<span class="f">scatter</span>(theta_vals, theta_dot_vals, s=<span class="n">2</span>, c=plot_color, alpha=<span class="n">0.7</span>)
+        
+    ax.<span class="f">set_title</span>(<span class="s">rf"$\omega = {omega_value:.2f}$, $e = {eccentricity_value:.3f}$"</span>, fontsize=<span class="n">14</span>)
+    ax.<span class="f">set_xlabel</span>(<span class="s">r"$\theta$"</span>, fontsize=<span class="n">12</span>)
+    ax.<span class="f">set_ylabel</span>(<span class="s">r"$\dot{\theta}$"</span>, fontsize=<span class="n">12</span>)
+
+    <span class="c"># Legend Setup</span>
+    legend_elements = [
+        <span class="f">Line2D</span>([<span class="n">0</span>], [<span class="n">0</span>], marker=<span class="s">'o'</span>, color=<span class="s">'w'</span>, markerfacecolor=<span class="s">'blue'</span>, markersize=<span class="n">8</span>, label=<span class="s">'Resonance (Close)'</span>),
+        <span class="f">Line2D</span>([<span class="n">0</span>], [<span class="n">0</span>], marker=<span class="s">'o'</span>, color=<span class="s">'w'</span>, markerfacecolor=<span class="s">'red'</span>, markersize=<span class="n">8</span>, label=<span class="s">'Circulation (Open)'</span>),
+        <span class="f">Line2D</span>([<span class="n">0</span>], [<span class="n">0</span>], marker=<span class="s">'o'</span>, color=<span class="s">'w'</span>, markerfacecolor=<span class="s">'green'</span>, markersize=<span class="n">8</span>, label=<span class="s">'Chaos'</span>)
+    ]
+    ax.<span class="f">legend</span>(handles=legend_elements, loc=<span class="s">'upper right'</span>)
+
+    output_filename = <span class="s">f"plot_{os.path.splitext(ecc_file)[0]}.png"</span>
+    plt.<span class="f">savefig</span>(output_filename, bbox_inches=<span class="s">'tight'</span>)
+    plt.<span class="f">close</span>(fig)</code></pre>
+
+                        <div class="image-row">
+                            <div class="image-container">
+                                <img src="Figures/sample_pps.png" alt="Sample Poincaré Surface of Section Image">
+                                <div class="image-caption">Classified Poincaré Surface of Section Output</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            const tabButtons = document.getElementsByClassName("tab-button");
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        function openSideTab(evt, sideTabName) {
+            const sidePanels = document.getElementsByClassName("side-tab-panel");
+            for (let i = 0; i < sidePanels.length; i++) {
+                sidePanels[i].classList.remove("active");
+            }
+            const sideButtons = document.getElementsByClassName("side-tab-button");
+            for (let i = 0; i < sideButtons.length; i++) {
+                sideButtons[i].classList.remove("active");
+            }
+            document.getElementById(sideTabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
+</body>
+</html>
